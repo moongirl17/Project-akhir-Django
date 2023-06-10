@@ -1,0 +1,167 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'carousel.html' %}
+
+
+
+<!--Main layout-->
+<main>
+    <div class="container">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark mt-3 mb-5 shadow p-2" style="background-color: rgb(49, 68, 117)" >
+            <!-- Container wrapper -->
+            <div class="container-fluid ">
+
+                <!-- Navbar brand -->
+                <a class="navbar-brand" href="{% url 'toko:home-produk-list' %}"
+                  ><span style="color: rgb(255, 255, 255); font-weight: bold">Cate</span
+                  ><span style="color: #96bbe8; font-weight: bold">gories:</span>
+                 </a>
+
+                <!-- Toggle button -->
+                <button
+                        class="navbar-toggler"
+                        type="button"
+                        data-mdb-toggle="collapse"
+                        data-mdb-target="#navbarSupportedContent2"
+                        aria-controls="navbarSupportedContent2"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Collapsible wrapper -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent2">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+  
+                        <!-- Link -->
+
+                        <li class="nav-item">
+                          <a class="nav-link text-white" href="{% url 'toko:home_category' 'S' %}">Shirt</a>
+                      </li>
+
+                      <!-- Link to filter by sport wears category -->
+                      <li class="nav-item">
+                          <a class="nav-link text-white" href="{% url 'toko:home_category' 'D' %}">Dress</a>
+                      </li>
+
+                      <!-- Link to filter by outwears category -->
+                      <li class="nav-item">
+                          <a class="nav-link text-white" href="{% url 'toko:home_category' 'SW' %}">Sweatshirt</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link text-white" href="{% url 'toko:home_category' 'C' %}">Pants</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'toko:home_category' 'Pl' %}">Playsuit & Jumpsuit</a>
+                    </li>
+  
+
+                    </ul>
+
+                    <!-- Search -->
+                    <form class="w-auto py-1" style="max-width: 12rem">
+                        <input type="search" class="form-control rounded-0" placeholder="Search" aria-label="Search">
+                    </form>
+
+                </div>
+            </div>
+            <!-- Container wrapper -->
+        </nav>
+        <!-- Navbar -->
+
+        <!-- Products -->
+        <section>
+            <div class="text-center">
+              <div class="row">
+                
+                {% for pItem in object_list %}
+                <div class="col-lg-3 col-md-6 mb-4">
+                  <div class="card">
+                    <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
+                      data-mdb-ripple-color="light">
+                      <img src="{{ pItem.gambar.url }}"
+                        class="w-100" />
+                      <a href="{{ pItem.get_absolute_url }}"> 
+                        <div class="mask">
+                          <div class="d-flex justify-content-start align-items-end h-100">
+                            <h5><span class="badge bg-{{ pItem.get_label_display }} ms-2">{{ pItem.label }}</span></h5>
+                          </div>
+                        </div>
+                        <div class="hover-overlay">
+                          <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="card-body">
+                      <a href="{{ pItem.get_absolute_url }}" class="text-reset">
+                        <h5 class="card-title mb-2">{{ pItem.nama_produk }}</h5>
+                      </a>
+                      <a href="" class="text-reset ">
+                        <p>{{ pItem.get_kategori_display }}</p>
+                      </a>
+                      <div class="ratting mt-2" style=" color: #fcd34d">
+                        <i class='fas fa-star'></i>
+                        <i class='fas fa-star'></i>
+                        <i class='fas fa-star'></i>
+                        <i class='fas fa-star'></i>
+                        <i class='fas fa-star'></i>
+                      </div>
+                      <!-- <p class="mb-3 price">Rp.{% if pItem.harga_diskon %}{{ pItem.harga_diskon }}{% else %}{{ pItem.harga }}{% endif %}</p> -->
+                      {% if pItem.harga_diskon %}
+                        <div class="mb-3 price me-1" style="font-size: 18px;">
+                         <p class="text-gray-500 flex items-center me-2"> 
+                           <del>Rp.{{ pItem.harga }} </del>
+                           <span class="mr-4 percentage" style="font-size: 15px;">-{{ pItem.discount_percentage }}%</span>
+                           <span class="ml-3 mt-1 py-0.5 px-2 inline-block border-2 border-red bx bxs-discount diskon" style="color: #b70808"><strong>Rp. {{ pItem.harga_diskon }}</strong>
+                          </span>
+                         </p>
+                        </div>
+                      {% else %}
+                        <p class="mb-3" style="font-size: 18px;">Rp.{{ pItem.harga }}</p>
+                      {% endif %}
+                    
+                    
+                    
+                    </div>
+                  </div>
+                </div>
+                {% empty %}
+                  <p>Data Produk belum tersedia</p>
+                {% endfor %}
+
+              </div>
+            </div>
+          </section>
+        <!-- End Products -->
+
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
+            <ul class="pagination">
+                <li class="page-item">
+                  {% if page_obj.has_previous %}
+                    <a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  {% endif %}
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+                <li class="page-item">
+                  {% if page_obj.has_next %}
+                    <a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  {% endif %}
+                </li>
+            </ul>
+        </nav>
+        {% endif %}
+        <!-- Pagination -->
+    </div>
+</main>
+<!--Main layout-->
+{% endblock content %}

@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+<!--Main layout-->
+<main class="mt-5 pt-4">
+    <div class="container mt-5">
+        <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">
+                <img src="{{ object.gambar.url }}" class="img-fluid" alt="" />
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">
+                <!--Content-->
+                <div class="p-4">
+                    <div class="mb-3">
+                        <a href="">
+                            <span class="badge bg-dark me-1">{{ object.get_kategori_display }}</span>
+                        </a>
+                        {% if object.label == 'NEW' %}
+                        <a href="">
+                            <span class="badge bg-{{ object.get_label_display }} me-1">New</span>
+                        </a>
+                        {% elif object.label == 'SALE' %}
+                        <a href="">
+                            <span class="badge bg-{{ object.get_label_display }} me-1">Sale</span>
+                        </a>
+                        {% else %}
+                        <a href="">
+                            <span class="badge bg-{{ object.get_label_display }} me-1">Bestseller</span>
+                        </a>
+                        {% endif %}
+                    </div>
+
+                    <strong><p style="font-size: 20px;">{{ object.nama_produk }}</p></strong>
+
+                    <p class="lead">
+                        {% if object.harga_diskon %}
+                        <span class="me-1">
+                            <del>Rp.{{ object.harga }}</del>
+                        </span>
+                        <span class="mr-4 percentage">-{{ object.discount_percentage }}%</span>
+                           <span class="ml-3 mt-1 py-0.5 px-2 flex" style="color: #b70808">Rp. {{ object.harga_diskon }}</span>
+                        {% else %}
+                        <span>Rp.{{ object.harga }}</span>
+                        {% endif %}
+                    </p>
+
+                    <div class="ratting" style=" color: #fcd34d">
+                        <i class='fas fa-star'></i>
+                        <i class='fas fa-star'></i>
+                        <i class='fas fa-star'></i>
+                        <i class='fas fa-star'></i>
+                        <i class='fas fa-star'></i>
+                    </div>
+
+                    <strong><p style="font-size: 20px;">Deskripsi</p></strong>
+
+                    <p>{{ object.deskripsi }}</p>
+                    <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary ms-1 mt-6">
+                        Tambah ke keranjang
+                        <i class="fas fa-shopping-cart ms-1"></i>
+                    </a>
+                    <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger ms-1" >
+                        Kurangi keranjang
+                        <i class="fas fa-shopping-cart ms-1"></i>
+                    </a>
+                </div>
+                <!--Content-->
+            </div>
+            <!--Grid column-->
+        </div>
+        <!--Grid row-->
+
+        <hr />
+
+        
+
+        <!--Grid row-->
+        <div class="row">
+            <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+                <div class="grid grid-cols-3 gap-3">
+                    {% for item in related_items %}
+                        <div>
+                            <a href="{{ item.get_absolute_url }}">
+                                <div>
+                                    <img src="{{ item.gambar.url }}" class="rounded-t-xl">
+                                </div>
+                                <div class="p-6 bg-white rounded-b-xl">
+                                    <h2 class="text-2xl">{{ item.nama_produk }}</h2>
+                                    <p class="text-gray-500">Rp. {{ item.harga }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!--Grid column-->
+        </div>
+        <!--Grid row-->
+    </div>
+</main>
+<!--Main layout-->
+
+{% endblock content%}

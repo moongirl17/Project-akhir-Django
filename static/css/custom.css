@@ -1,0 +1,43 @@
+.carousel-item {
+  height: 30vh;
+}
+.card {
+box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.footer-cta {
+box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+}
+.price {
+color: #263238;
+font-size: 10px;
+}
+
+.rating {
+  color: #fcd34d; /* Warna kuning untuk bintang */
+}
+
+.rating .fas.fa-star {
+  color: inherit;
+}
+span.ml-3.percentage {
+  color: #f56565;
+  font-size: 0.875rem; /* Ukuran teks yang lebih kecil */
+}
+
+span.ml-3.diskon {
+  color: #f56565;
+  font-size: 0.875rem; /* Ukuran teks yang lebih kecil */
+}
+
+ 
+.card-title {
+color:#263238
+}
+
+.sale {
+color: #E53935
+}
+
+.sale-badge {
+background-color: #E53935
+}
